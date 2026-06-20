@@ -110,7 +110,8 @@ export default function Inventory() {
       const formData = new FormData();
       formData.append('file', file);
       const token = localStorage.getItem('token');
-      const res = await fetch('/api/products/import', {
+      const baseURL = import.meta.env.PROD ? 'https://stock-taking-api.onrender.com' : '';
+      const res = await fetch(`${baseURL}/api/products/import`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
