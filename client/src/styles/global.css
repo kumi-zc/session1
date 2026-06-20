@@ -181,14 +181,80 @@ body {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  /* Login Panel */
   .login-panel {
     width: 100% !important;
     min-width: unset !important;
     padding: 24px 20px !important;
   }
-  .login-panel .ant-input,
-  .login-panel .ant-input-password {
-    font-size: 16px !important;
+
+  /* Sidebar - hide on mobile, show as overlay */
+  .ant-layout-sider {
+    position: fixed !important;
+    z-index: 100 !important;
+    transform: translateX(-100%);
+    transition: transform 0.3s !important;
+  }
+  .ant-layout-sider.ant-layout-sider-collapsed {
+    transform: translateX(0);
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+  }
+  .ant-layout-sider:not(.ant-layout-sider-collapsed) {
+    transform: translateX(0);
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+  }
+
+  /* Main content - no left margin on mobile */
+  .ant-layout-content {
+    margin-left: 0 !important;
+    padding: 12px !important;
+  }
+
+  /* Header */
+  .ant-layout-header {
+    padding: 0 12px !important;
+  }
+
+  /* Cards */
+  .ant-card {
+    margin-bottom: 12px;
+  }
+
+  /* Tables - horizontal scroll */
+  .ant-table-wrapper {
+    overflow-x: auto;
+  }
+
+  /* Stats cards - stack on mobile */
+  .ant-row > .ant-col {
+    margin-bottom: 12px;
+  }
+
+  /* Charts - full width */
+  .recharts-responsive-container {
+    width: 100% !important;
+  }
+
+  /* Modal - full width on mobile */
+  .ant-modal {
+    margin: 12px !important;
+    max-width: calc(100vw - 24px) !important;
+  }
+
+  /* Form inputs - larger touch targets */
+  .ant-input,
+  .ant-input-password,
+  .ant-select-selector {
+    min-height: 44px;
+  }
+
+  /* Buttons - larger touch targets */
+  .ant-btn {
+    min-height: 44px;
   }
 }
 
