@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const bcrypt = require('bcryptjs');
 const { PrismaClient } = require('@prisma/client');
 
 dotenv.config();
@@ -8,6 +9,27 @@ dotenv.config();
 const prisma = new PrismaClient();
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Seed default admin user
+async function seedAdmin() {
+  try {
+    const userCount = await prisma.user.count();
+    if (userCount === 0) {
+      const hashed = await bcrypt.hash('admin123', 10);
+      await prisma.user.create({
+        data: {
+          username: 'admin',
+          password: hashed,
+          role: 'ADMIN',
+          status: 'APPROVED',
+        },
+      });
+      console.log('Default admin user created: admin / admin123');
+    }
+  } catch (err) {
+    console.error('Seed error:', err.message);
+  }
+}
 
 // Make prisma available to routes
 app.set('prisma', prisma);
@@ -37,8 +59,9 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  await seedAdmin();
 });
 
 module.exports = app;
